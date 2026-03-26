@@ -3,37 +3,40 @@
 <head>
 <meta charset="utf-8">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: #000;
+* { margin: 0; padding: 0; }
+body {
+    background: #000000;
     height: 100vh;
+    overflow: hidden;
     display: flex;
     align-items: center;
-    overflow: hidden;
-  }
-  .ticker {
-    white-space: nowrap;
+}
+marquee {
     color: #00aaff;
-    font: bold 64px monospace;
-    text-shadow:
-      0 0 10px #00aaff,
-      0 0 30px #00aaff,
-      0 0 60px #0055ff;
-    animation: scroll 12s linear infinite;
-    padding-left: 100%;
-  }
-  @keyframes scroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
+    font-size: 64px;
+    font-family: monospace;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00aaff, 0 0 30px #00aaff, 0 0 60px #0055ff;
+    white-space: nowrap;
+}
 </style>
 </head>
 <body>
-<div class="ticker" id="t">RADIO WALLPLATE</div>
+<marquee scrollamount="6" id="ticker">RADIO WALLPLATE</marquee>
 <script>
-  var p = new URLSearchParams(window.location.search);
-  var t = p.get('t');
-  if (t) document.getElementById('t').innerText = t;
+var search = window.location.search;
+var text = "RADIO WALLPLATE";
+if (search.length > 0) {
+    var pairs = search.substring(1).split("&");
+    var i;
+    for (i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split("=");
+        if (pair[0] === "t" && pair.length > 1) {
+            text = decodeURIComponent(pair[1].replace(/\+/g, " "));
+        }
+    }
+}
+document.getElementById("ticker").innerHTML = text;
 </script>
 </body>
 </html>
